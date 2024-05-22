@@ -28,9 +28,12 @@ function App()
 {
   const [slideIndex, setSlideIndex] = useState(1);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isCartPopupVisible, setIsCartPopupVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [quantities, setQuantities] = useState(items.map(() => 1));
 
   useEffect(() => {
     function showSlides(n) 
@@ -119,18 +122,34 @@ function App()
     console.log("Password:", password);
   }
 
+  function handleAddToCart(index) 
+  {
+    const item = items[index];
+    const quantity = quantities[index];
+    setCart([...cart, { ...item, quantity }]);
+  }
+
+  function handleQuantityChange(index, delta) 
+  {
+    const newQuantities = [...quantities];
+    newQuantities[index] = Math.max(1, newQuantities[index] + delta);
+    setQuantities(newQuantities);
+  }
+
   return (
     <div className="App">
       <div className="top-bar">
         <div className="top-bar-content">
           <h1>MachineProblem</h1>
           <button className="sign-in-button" onClick={handleSignIn}>Sign In / Sign Up</button>
+          <button className="view-cart-button" onClick={() => setIsCartPopupVisible(true)}>View Cart</button>
         </div>
       </div>
+
       {isPopupVisible && (
         <div className="popup">
           <div className="popup-content">
-            <span className="close" onClick={handleClosePopup}>&times;</span> {/* Close button */}
+            <span className="close" onClick={handleClosePopup}>&times;</span>
             <h2>Sign In / Sign Up</h2>
             <form onSubmit={handleSubmit}>
               <label>
@@ -148,6 +167,31 @@ function App()
               <br />
               <button type="submit">Submit</button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {isCartPopupVisible && (
+        <div className="popup">
+          <div className="popup-content">
+            <span className="close" onClick={() => setIsCartPopupVisible(false)}>&times;</span>
+            <h2>Shopping Cart</h2>
+            {cart.length > 0 ? (
+              <div>
+                <ul>
+                  {cart.map((item, index) => (
+                    <li key={index}>
+                      <img src={item.img} alt={item.name} style={{ width: '50px', height: '50px' }} />
+                      <span>{item.name}</span>
+                      <span>Quantity: {item.quantity}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button onClick={() => console.log('Proceed to Order')}>Proceed to Order</button>
+              </div>
+            ) : (
+              <p>Your cart is empty.</p>
+            )}
           </div>
         </div>
       )}
@@ -182,6 +226,13 @@ function App()
             <div key={index} className="grid-item">
               <img src={item.img} alt={item.name} />
               <p>{item.name}</p>
+              <p>Item description goes here.</p>
+              <div className="quantity-control">
+                <button onClick={() => handleQuantityChange(index, -1)}>-</button>
+                <span>{quantities[index]}</span>
+                <button onClick={() => handleQuantityChange(index, 1)}>+</button>
+              </div>
+              <button onClick={() => handleAddToCart(index)}>Add to Cart</button>
             </div>
           ))}
         </div>
