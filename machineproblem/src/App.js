@@ -6,18 +6,18 @@ const img2 = 'https://shopee.ph/blog/wp-content/uploads/2020/06/spb_7.7_flash-sa
 const img3 = 'https://shopee.ph/blog/wp-content/uploads/2020/06/spb_7.7_flash-sale_banner-3-1280x720.jpg';
 
 const items = [
-  { name: "Men's Apparel", img: 'https://wharton.ph/cdn/shop/products/384-0038BLACK1WB.jpg?v=1634229641' },
+  { name: "Men's Apparels", img: 'https://wharton.ph/cdn/shop/products/384-0038BLACK1WB.jpg?v=1634229641' },
   { name: "Men's Accessories", img: 'https://www.watchportal.com.ph/cdn/shop/files/casio-mtp-v001l-1b-black-leather-strap-watch-for-men-watchportal-ph_ebf0d6df-40a3-42d0-91a3-790e9eba14f7.jpg?v=1697162378' },
-  { name: "Women's Apparel", img: 'https://images-cdn.ubuy.co.in/657af59e0550e37125744ac1-toddler-baby-girl-dress-summer-cotton.jpg' },
+  { name: "Women's Apparels", img: 'https://images-cdn.ubuy.co.in/657af59e0550e37125744ac1-toddler-baby-girl-dress-summer-cotton.jpg' },
   { name: "Women's Accessories", img: 'https://imonojewelryph.com/wp-content/uploads/2023/12/10987IST.jpg' },
-  { name: 'Beauty', img: 'https://m.maccosmetics.com.ph/media/export/cms/products/640x600/mac_sku_S4K031_640x600_0.jpg' },
+  { name: 'Beauty Products', img: 'https://m.maccosmetics.com.ph/media/export/cms/products/640x600/mac_sku_S4K031_640x600_0.jpg' },
   { name: 'Mobile & Gadgets', img: 'https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1666344481.20013313!256x256.png' },
   { name: 'Mobile Accessories', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1AnluHC84GrK4jGMpkYHZekowVwzgIfoPJrf0AIQjWg&s' },
-  { name: 'Gaming', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOow5xweEyzCpiTsibECyXiaa6VJ9tJB3mcBGwWwdXww&s' },
+  { name: 'Gaming Entertainment', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOow5xweEyzCpiTsibECyXiaa6VJ9tJB3mcBGwWwdXww&s' },
   { name: 'Home Entertainment', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUTj6palzW30ApSord_5oX8TKsbSnzm3aEAFbYOuKOxA&s' },
-  { name: 'Babies & Kids', img: 'https://public.blenderkit.com/thumbnails/assets/e5893ed629654263841fca43df435f72/files/thumbnail_74df536d-06e4-46f8-8640-2e1604b3b220.png.256x256_q85.png.webp?webp_generated=1695340715' },
-  { name: 'Home & Living', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4sfex9UTiC30nMdA009Jd5rca2__wXJItxIwXeSV0sA&s' },
-  { name: 'Health & Personal Care', img: 'https://ipcdn.freshop.com/resize?url=https://images.freshop.com/1564405684711559767/be2aa151925e7dd94d4f15fbcf7b1826_large.png&width=256&type=webp&quality=80' },
+  { name: 'Babies & Kids Items', img: 'https://public.blenderkit.com/thumbnails/assets/e5893ed629654263841fca43df435f72/files/thumbnail_74df536d-06e4-46f8-8640-2e1604b3b220.png.256x256_q85.png.webp?webp_generated=1695340715' },
+  { name: 'Home & Living Items', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4sfex9UTiC30nMdA009Jd5rca2__wXJItxIwXeSV0sA&s' },
+  { name: 'Personal Health Care', img: 'https://ipcdn.freshop.com/resize?url=https://images.freshop.com/1564405684711559767/be2aa151925e7dd94d4f15fbcf7b1826_large.png&width=256&type=webp&quality=80' },
   { name: 'Makeup & Fragrances', img: 'https://lamoisson.com/cdn/shop/products/proraso-cologne-vaporisateur-wood-and-spice-100ml_256x.jpg?v=1634245866' },
   { name: 'Home Appliances', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqC1e6QjO7WYm4hIdcrqsHGCNHyc08Dv010_I7QUQ8vg&s' },
   { name: 'Laptops & Computers', img: 'https://business.shoppable.ph/_next/image?url=https%3A%2F%2Fshoppable-dev.s3.ap-southeast-1.amazonaws.com%2Fproducts%2F867bd195-f749-40e4-a6a4-6a841e4a49b1.webp&w=256&q=75' },
@@ -145,7 +145,7 @@ function App()
           <button className="view-cart-button" onClick={() => setIsCartPopupVisible(true)}>View Cart</button>
         </div>
       </div>
-
+  
       {isPopupVisible && (
         <div className="popup">
           <div className="popup-content">
@@ -170,7 +170,7 @@ function App()
           </div>
         </div>
       )}
-
+  
       {isCartPopupVisible && (
         <div className="popup">
           <div className="popup-content">
@@ -183,6 +183,7 @@ function App()
                     <li key={index}>
                       <img src={item.img} alt={item.name} style={{ width: '50px', height: '50px' }} />
                       <span>{item.name}</span>
+                      <br></br>
                       <span>Quantity: {item.quantity}</span>
                     </li>
                   ))}
@@ -195,32 +196,45 @@ function App()
           </div>
         </div>
       )}
-
+  
       <div className="slideshow-container">
         <div className="mySlides fade">
           <img src={img1} style={{ width: "100%" }} alt="Slide 1" />
         </div>
-
+  
         <div className="mySlides fade">
           <img src={img2} style={{ width: "100%" }} alt="Slide 2" />
         </div>
-
+  
         <div className="mySlides fade">
           <img src={img3} style={{ width: "100%" }} alt="Slide 3" />
         </div>
-
+  
         <button className="prev" onClick={() => plusSlides(-1)}>&#10094;</button>
         <button className="next" onClick={() => plusSlides(1)}>&#10095;</button>
       </div>
       <br />
-
+  
       <div style={{ textAlign: "center" }}>
         <span className="dot" onClick={() => currentSlide(1)}></span>
         <span className="dot" onClick={() => currentSlide(2)}></span>
         <span className="dot" onClick={() => currentSlide(3)}></span>
       </div>
-
-      <div className="grid-container-wrapper">
+  
+      <div className="grid-container-wrapper-category">
+        <div className="grid-container-category">
+          {items.map((item, index) => (
+            <a key={index} href={`your_page_url_here`} className="grid-item-link">
+              <div className="grid-item">
+                <img src={item.img} alt={item.name} />
+                <p>{item.name}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+  
+      <div className="grid-container-wrapper-item-sell">
         <div className="grid-container">
           {items.map((item, index) => (
             <div key={index} className="grid-item">
@@ -238,7 +252,7 @@ function App()
         </div>
       </div>
     </div>
-  );
+  );  
 }
 
 export default App;
