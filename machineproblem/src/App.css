@@ -61,6 +61,7 @@ button {
 }
 
 .sign-in-button,
+.sign-up-button,
 .view-cart-button {
   padding: 10px 20px;
   background-color: #007bff;

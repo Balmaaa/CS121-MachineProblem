@@ -34,6 +34,9 @@ function App()
   const [showPassword, setShowPassword] = useState(false);
   const [cart, setCart] = useState([]);
   const [quantities, setQuantities] = useState(items.map(() => 1));
+  const [isSignUpPopupVisible, setIsSignUpPopupVisible] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isSeller, setIsSeller] = useState(false);
 
   useEffect(() => {
     function showSlides(n) 
@@ -95,6 +98,7 @@ function App()
     };
   }, [slideIndex, isPopupVisible]);
 
+  
   function plusSlides(n) 
   {
     setSlideIndex((prevIndex) => prevIndex + n);
@@ -122,6 +126,26 @@ function App()
     console.log("Password:", password);
   }
 
+  function handleSignUp(event) {
+    event.stopPropagation();
+    setIsSignUpPopupVisible(true);
+  }
+  
+  function handleCloseSignUpPopup() {
+    setIsSignUpPopupVisible(false);
+  }
+  
+  function handleSignUpSubmit(event) {
+    event.preventDefault();
+    if (password === confirmPassword) {
+      console.log("Email:", email);
+      console.log("Password:", password);
+      console.log("Is Seller:", isSeller);
+    } else {
+      console.error('Passwords do not match.');
+    }
+  }
+
   function handleAddToCart(index) 
   {
     const item = items[index];
@@ -141,7 +165,8 @@ function App()
       <div className="top-bar">
         <div className="top-bar-content">
           <h1>MachineProblem</h1>
-          <button className="sign-in-button" onClick={handleSignIn}>Sign In / Sign Up</button>
+          <button className="sign-in-button" onClick={handleSignIn}>Sign In</button>
+          <button className="sign-up-button" onClick={handleSignUp}>Sign Up</button>
           <button className="view-cart-button" onClick={() => setIsCartPopupVisible(true)}>View Cart</button>
         </div>
       </div>
@@ -150,7 +175,7 @@ function App()
         <div className="popup">
           <div className="popup-content">
             <span className="close" onClick={handleClosePopup}>&times;</span>
-            <h2>Sign In / Sign Up</h2>
+            <h2>Sign In</h2>
             <form onSubmit={handleSubmit}>
               <label>
                 Email:
@@ -165,6 +190,41 @@ function App()
                 </div>
               </label>
               <br />
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      )}
+  
+      {isSignUpPopupVisible && (
+        <div className="popup">
+          <div className="popup-content">
+            <span className="close" onClick={handleCloseSignUpPopup}>&times;</span>
+            <h2>Sign Up</h2>
+            <form onSubmit={handleSignUpSubmit}>
+              <label>
+                Email:
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ display: 'block', margin: '0 auto' }} />
+              </label>
+              <br />
+              <label>
+                Password:
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required style={{ width: '80%', marginRight: '10px' }} />
+                  <span onClick={() => setShowPassword(!showPassword)}>{showPassword ? '🙈' : '👁️'}</span>
+                </div>
+              </label>
+              <br />
+              <label>
+                Confirm Password:
+                <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required style={{ display: 'block', margin: '0 auto' }} />
+              </label>
+              <br />
+              <label style={{ display: 'inline', alignItems: 'center' }}>
+                <span>Are you a seller?</span>
+                <input type="checkbox" checked={isSeller} onChange={(e) => setIsSeller(e.target.checked)} />
+              </label>
+              <br/>
               <button type="submit">Submit</button>
             </form>
           </div>
@@ -252,7 +312,6 @@ function App()
         </div>
       </div>
     </div>
-  );  
+  );    
 }
-
 export default App;
