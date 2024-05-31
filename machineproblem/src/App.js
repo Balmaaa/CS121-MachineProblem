@@ -207,7 +207,7 @@ function App()
     <div className="App">
       <div className="top-bar">
         <div className="top-bar-content">
-          <h1>MachineProblem</h1>
+          <h1> Jasper's Clothing Shop </h1>
           <button className="sign-in-button" onClick={handleSignIn}>Sign In</button>
           <button className="sign-up-button" onClick={handleSignUp}>Sign Up</button>
           <button className="view-cart-button" onClick={() => setIsCartPopupVisible(true)}>View Cart</button>
