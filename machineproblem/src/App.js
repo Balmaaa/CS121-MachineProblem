@@ -1,28 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-const img1 = 'https://shopee.ph/blog/wp-content/uploads/2019/04/shopee-55-double-double-sale-1280x720.jpg';
-const img2 = 'https://shopee.ph/blog/wp-content/uploads/2020/06/spb_7.7_flash-sale_banner-3-1280x720.jpg';
-const img3 = 'https://shopee.ph/blog/wp-content/uploads/2020/06/spb_7.7_flash-sale_banner-3-1280x720.jpg';
+const img1 = 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/73fbe271026179.5bb6e7af358b6.jpg';
+const img2 = 'https://sc0.blr1.cdn.digitaloceanspaces.com/article/126864-zfwymgwgcj-1567691366.jpeg';
+const img3 = 'https://poweradspy.com/wp-content/uploads/2023/10/nike-ads-growth.webp';
 
 const items = [
-  { name: "Men's Apparels", img: 'https://wharton.ph/cdn/shop/products/384-0038BLACK1WB.jpg?v=1634229641' },
-  { name: "Men's Accessories", img: 'https://www.watchportal.com.ph/cdn/shop/files/casio-mtp-v001l-1b-black-leather-strap-watch-for-men-watchportal-ph_ebf0d6df-40a3-42d0-91a3-790e9eba14f7.jpg?v=1697162378' },
-  { name: "Women's Apparels", img: 'https://images-cdn.ubuy.co.in/657af59e0550e37125744ac1-toddler-baby-girl-dress-summer-cotton.jpg' },
-  { name: "Women's Accessories", img: 'https://imonojewelryph.com/wp-content/uploads/2023/12/10987IST.jpg' },
-  { name: 'Beauty Products', img: 'https://m.maccosmetics.com.ph/media/export/cms/products/640x600/mac_sku_S4K031_640x600_0.jpg' },
-  { name: 'Mobile & Gadgets', img: 'https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1666344481.20013313!256x256.png' },
-  { name: 'Mobile Accessories', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1AnluHC84GrK4jGMpkYHZekowVwzgIfoPJrf0AIQjWg&s' },
-  { name: 'Gaming Entertainment', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOow5xweEyzCpiTsibECyXiaa6VJ9tJB3mcBGwWwdXww&s' },
-  { name: 'Home Entertainment', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUTj6palzW30ApSord_5oX8TKsbSnzm3aEAFbYOuKOxA&s' },
-  { name: 'Babies & Kids Items', img: 'https://public.blenderkit.com/thumbnails/assets/e5893ed629654263841fca43df435f72/files/thumbnail_74df536d-06e4-46f8-8640-2e1604b3b220.png.256x256_q85.png.webp?webp_generated=1695340715' },
-  { name: 'Home & Living Items', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4sfex9UTiC30nMdA009Jd5rca2__wXJItxIwXeSV0sA&s' },
-  { name: 'Personal Health Care', img: 'https://ipcdn.freshop.com/resize?url=https://images.freshop.com/1564405684711559767/be2aa151925e7dd94d4f15fbcf7b1826_large.png&width=256&type=webp&quality=80' },
-  { name: 'Makeup & Fragrances', img: 'https://lamoisson.com/cdn/shop/products/proraso-cologne-vaporisateur-wood-and-spice-100ml_256x.jpg?v=1634245866' },
-  { name: 'Home Appliances', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqC1e6QjO7WYm4hIdcrqsHGCNHyc08Dv010_I7QUQ8vg&s' },
-  { name: 'Laptops & Computers', img: 'https://business.shoppable.ph/_next/image?url=https%3A%2F%2Fshoppable-dev.s3.ap-southeast-1.amazonaws.com%2Fproducts%2F867bd195-f749-40e4-a6a4-6a841e4a49b1.webp&w=256&q=75' },
-  { name: 'School Supplies', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJemkN22sz71GRSe4C72Ea7SobrVK0LHh6V1c9c-LrDg&s' }
+  { name: "Chanel", img: 'https://cdn.iconscout.com/icon/free/png-256/free-chanel-202547.png?f=webp' },
+  { name: "Nike", img: 'https://cdn.iconscout.com/icon/free/png-256/free-nike-15-761696.png' },
+  { name: "Adidas", img: 'https://cdn.jiocommerce.io/v2/yellow-queen-0c3fa9/sngprd/wrkr/misc/pictures/free-icon/original/yaGUy9tcV-Catalogue-logo.png' },
+  { name: "Gucci", img: 'https://cdn.iconscout.com/icon/free/png-256/free-gucci-3215414-2673832.png' },
+  { name: 'Sony', img: 'https://companiesmarketcap.com/img/company-logos/256/SONY.png' },
+  { name: 'Lego', img: 'https://qph.cf2.quoracdn.net/main-qimg-fe6e2fc94faef15f560caa3447aec070' },
+  { name: 'Lacoste', img: 'https://laoispharmacy.com/wp-content/uploads/2020/01/logo-lacoste-256.png' },
+  { name: 'Apple', img: 'https://curiouslionlearning.com/wp-content/uploads/2022/10/639906_apple_512x512.png' },
+  { name: 'Oppo', img: 'https://android-artworks.25pp.com/fs08/2024/04/16/1/106_3e134d21c2a1e90055b421527f6930a0_con.png' },
+  { name: 'Uniqlo', img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/2c/a9/07/2ca90744-e87a-6060-b021-e8abbb8c302b/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/256x256bb.jpg' },
+  { name: 'H&M', img: 'https://images.crunchbase.com/image/upload/c_pad,h_256,w_256,f_auto,q_auto:eco,dpr_1/v1397750641/49e1d00a9e41c47154515fca87952c89.png' },
+  { name: 'Reebok', img: 'https://cdn.iconscout.com/icon/free/png-256/free-reebok-3421520-2854201.png' },
+  { name: 'Bench', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2D3nfaVWhoPWrIBmlqk6LVSE5bE_wVdUP_A&s' },
+  { name: 'Dell', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHpOxiMfrltG52_wgsZ1KSbtXqmNyUPe6JyQ&s' },
+  { name: 'Prada', img: 'https://cdn.iconscout.com/icon/free/png-256/free-prada-3384874-2822955.png' },
+  { name: 'Dior', img: 'https://companiesmarketcap.com/img/company-logos/256/CDI.PA.png' }
 ];
+
+const links = [
+  { link: 'https://www.chanel.com/us/'},
+  { link: 'https://www.nike.com/ph/'},
+  { link: 'https://www.adidas.com/us/'},
+  { link: 'https://www.gucci.com/us/'},
+  { link: 'https://www.sony.com/us/'},
+  { link: 'https://www.lego.com/us/'},
+  { link: 'https://www.lacoste.com/us/'},
+  { link: 'https://www.apple.com/ph/store'},
+  { link: 'https://www.oppo.com/en/'},
+  { link: 'https://www.uniqlo.com/us/'},
+  { link: 'https://www2.hm.com/en_asia5/index.html'},
+  { link: 'https://www.reebok.com/us/'},
+  { link: 'https://shop.bench.com.ph/'},
+  { link: 'https://www.dell.com/us/'},
+  { link: 'https://www.prada.com/us/'},
+  { link: 'https://www.dior.com/us/'},
+]
+
+const sellitems = [
+  { name: "Iphone X", img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDmLKgd8GhdNgijYM6oKq0rxtzdRxf3YfiTQ&s', description: '₱100,000'},
+  { name: "Reebok Classic Leather Black", img: 'https://i.ebayimg.com/images/g/g5oAAOSwpyxj9-EC/s-l1200.jpg', description: '₱4,000' },
+  { name: "Uniqlo Ultra Light Down Jacket", img: 'https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/460914/item/goods_12_460914.jpg?width=494' , description: '₱6,000'},
+  { name: "Nike Dunk High", img: 'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/99486859-0ff3-46b4-949b-2d16af2ad421/custom-nike-dunk-high-by-you-shoes.png' , description: '₱8,500'},
+  { name: "Uniqlo Peace For All", img: 'https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/459561/item/goods_09_459561.jpg?width=494' , description: '₱800'},
+  { name: "Uniqlo Supima Cotton", img: 'https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/455365001/item/goods_31_455365001.jpg?width=494' , description: '₱900'},
+  { name: "Guess Blue Denim Watch", img: 'https://img.lazcdn.com/g/p/ca7d1ee08155ef62cef8ea7170f3708b.jpg_720x720q80.jpg' , description: '₱6,000'},
+  { name: "Nike Dunk Low", img: 'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/9b26aa8f-0173-409b-b30a-7ce2d88573a4/custom-nike-dunk-low-by-you.png' , description: '₱15,000'},
+  { name: "Nike Air Force 1 Mid", img: 'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/e9d41cd4-a2c5-4ca7-a3aa-f4bf597658d0/custom-nike-air-force-1-mid-by-you-shoes.png' , description: '₱7,900'},
+  { name: "Oppo A95", img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_FicV-TmUpL5xDcdibqjOrL-sCSOqmFPKMA&s' , description: '₱24,000'},
+  { name: "Sony BRAVIA TV X85K", img: 'https://www.sony-asia.com/image/88de0249f4df8101f60bccc4aaa57779?fmt=pjpeg&wid=330&bgcolor=FFFFFF&bgc=FFFFFF' , description: '₱60,500'},
+  { name: "Lacoste Black Crocs", img: 'https://i5.walmartimages.com/asr/d15b955f-63ec-4cdc-aaa4-37b28807b81f.6856aa51ea991e5595d5396efb074517.jpeg' , description: '₱8,000'},
+  { name: "Dior Homme Eau de Toilette", img: 'https://static.beautytocare.com/media/catalog/product/d/i/dior-dior-homme-eau-de-toilette-150ml.jpg' , description: '₱8,100'},
+  { name: "Samsung Galaxy S21", img: 'https://cdn.alloallo.media/catalog/product/samsung/galaxy-s/galaxy-s21/galaxy-s21-phantom-purple.jpg' , description: '₱21,000'},
+  { name: "Dell Latitude 5430", img: 'https://business.shoppable.ph/_next/image?url=https%3A%2F%2Fshoppable-dev.s3.ap-southeast-1.amazonaws.com%2F9c27c63a-1afd-4327-ac6e-8b07a7f90fd3.jpg&w=256&q=75' , description: '₱81,000'},
+  { name: "DUPLO Tower Crane", img: 'https://images.prod.babyshopgroup.io/images/642997_10%23a/256x256.jpeg' , description: '₱5,400'}
+];
+
 
 function App() 
 {
@@ -104,6 +143,10 @@ function App()
     setSlideIndex((prevIndex) => prevIndex + n);
   }
 
+  function handleSelectUserType(isSeller) {
+    setIsSeller(isSeller);
+  }
+
   function currentSlide(n) {
     setSlideIndex(n);
   }
@@ -148,7 +191,7 @@ function App()
 
   function handleAddToCart(index) 
   {
-    const item = items[index];
+    const item = sellitems[index];
     const quantity = quantities[index];
     setCart([...cart, { ...item, quantity }]);
   }
@@ -220,10 +263,11 @@ function App()
                 <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required style={{ display: 'block', margin: '0 auto' }} />
               </label>
               <br />
-              <label style={{ display: 'inline', alignItems: 'center' }}>
-                <span>Are you a seller?</span>
-                <input type="checkbox" checked={isSeller} onChange={(e) => setIsSeller(e.target.checked)} />
-              </label>
+              <div>
+                <button onClick={() => handleSelectUserType(false)}>Buyer</button>
+                <span style={{ margin: '0 10px' }}></span>
+                <button onClick={() => handleSelectUserType(true)}>Seller</button>
+              </div>
               <br/>
               <button type="submit">Submit</button>
             </form>
@@ -284,7 +328,7 @@ function App()
       <div className="grid-container-wrapper-category">
         <div className="grid-container-category">
           {items.map((item, index) => (
-            <a key={index} href={`your_page_url_here`} className="grid-item-link">
+            <a key={index} href={links[index].link} className="grid-item-link">
               <div className="grid-item">
                 <img src={item.img} alt={item.name} />
                 <p>{item.name}</p>
@@ -296,11 +340,11 @@ function App()
   
       <div className="grid-container-wrapper-item-sell">
         <div className="grid-container">
-          {items.map((item, index) => (
+          {sellitems.map((sellitem, index) => (
             <div key={index} className="grid-item">
-              <img src={item.img} alt={item.name} />
-              <p>{item.name}</p>
-              <p>Item description goes here.</p>
+              <img src={sellitem.img} alt={sellitem.name} />
+              <p>{sellitem.name}</p>
+              <p>{sellitem.description}</p>
               <div className="quantity-control">
                 <button onClick={() => handleQuantityChange(index, -1)}>-</button>
                 <span>{quantities[index]}</span>
