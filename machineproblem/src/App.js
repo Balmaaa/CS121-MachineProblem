@@ -76,59 +76,55 @@ function App()
   const [isSignUpPopupVisible, setIsSignUpPopupVisible] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSeller, setIsSeller] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState('');
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
-    function showSlides(n) 
-    {
+    const storedUser = localStorage.getItem('loggedInUser');
+    if (storedUser) {
+      setLoggedInUser(storedUser);
+    }
+  
+    function showSlides(n) {
       let i;
       let slides = document.getElementsByClassName("mySlides");
       let dots = document.getElementsByClassName("dot");
- 
-      if (slides.length === 0) 
-      {
+  
+      if (slides.length === 0) {
         return;
       }
-    
-      if (n > slides.length) {setSlideIndex(1)}
-      if (n < 1) {setSlideIndex(slides.length)}
-    
-      for (i = 0; i < slides.length; i++) 
-      {
+  
+      if (n > slides.length) { setSlideIndex(1) }
+      if (n < 1) { setSlideIndex(slides.length) }
+  
+      for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
       }
-      
-      if (slides[slideIndex-1])
-      {
-        slides[slideIndex-1].style.display = "block";
+  
+      if (slides[slideIndex - 1]) {
+        slides[slideIndex - 1].style.display = "block";
       }
-    
-      for (i = 0; i < dots.length; i++)
-      {
+  
+      for (i = 0; i < dots.length; i++) {
         dots[i].className = dots[i].className.replace(" active", "");
       }
-      
-      if (dots[slideIndex-1]) 
-      {
-        dots[slideIndex-1].className += " active";
+  
+      if (dots[slideIndex - 1]) {
+        dots[slideIndex - 1].className += " active";
       }
     }
     showSlides(slideIndex);
-
-    function handleClickOutside(event)
-    {
+  
+    function handleClickOutside(event) {
       const popup = document.querySelector('.popup-content');
-      if (popup && !popup.contains(event.target)) 
-      {
+      if (popup && !popup.contains(event.target)) {
         setIsPopupVisible(false);
       }
     }
   
-    if (isPopupVisible) 
-    {
+    if (isPopupVisible) {
       document.addEventListener('click', handleClickOutside);
-    } 
-    else 
-    {
+    } else {
       document.removeEventListener('click', handleClickOutside);
     }
   
@@ -184,9 +180,24 @@ function App()
       console.log("Email:", email);
       console.log("Password:", password);
       console.log("Is Seller:", isSeller);
+      setLoggedInUser(email);
+      setUserType(isSeller ? 'Seller' : 'Buyer');
+      localStorage.setItem('loggedInUser', email);
+      window.location.reload();
     } else {
       console.error('Passwords do not match.');
     }
+  }
+  
+  function handleLogout() {
+    localStorage.removeItem('loggedInUser');
+    setLoggedInUser('');
+    setUserType('');
+    window.location.reload();
+  }
+
+  function handleSelectUserType(isSeller) {
+    setUserType(isSeller ? 'Seller' : 'Buyer');
   }
 
   function handleAddToCart(index) 
@@ -207,9 +218,18 @@ function App()
     <div className="App">
       <div className="top-bar">
         <div className="top-bar-content">
-          <h1> Jasper's Clothing Shop </h1>
-          <button className="sign-in-button" onClick={handleSignIn}>Sign In</button>
-          <button className="sign-up-button" onClick={handleSignUp}>Sign Up</button>
+          <h1>Jasper's Clothing Shop</h1>
+          {loggedInUser ? (
+            <>
+              <span> Welcome, {loggedInUser} ({userType})</span>
+              <button className="logout-button" onClick={handleLogout}>Logout</button>
+            </>
+          ) : (
+            <>
+              <button className="sign-in-button" onClick={handleSignIn}>Sign In</button>
+              <button className="sign-up-button" onClick={handleSignUp}>Sign Up</button>
+            </>
+          )}
           <button className="view-cart-button" onClick={() => setIsCartPopupVisible(true)}>View Cart</button>
         </div>
       </div>
@@ -264,11 +284,11 @@ function App()
               </label>
               <br />
               <div>
-                <button onClick={() => handleSelectUserType(false)}>Buyer</button>
+                <button onClick={(e) => handleSelectUserType(e, false)}>Buyer</button>
                 <span style={{ margin: '0 10px' }}></span>
-                <button onClick={() => handleSelectUserType(true)}>Seller</button>
+                <button onClick={(e) => handleSelectUserType(e, true)}>Seller</button>
               </div>
-              <br/>
+              <br />
               <button type="submit">Submit</button>
             </form>
           </div>
@@ -287,7 +307,7 @@ function App()
                     <li key={index}>
                       <img src={item.img} alt={item.name} style={{ width: '50px', height: '50px' }} />
                       <span>{item.name}</span>
-                      <br></br>
+                      <br />
                       <span>Quantity: {item.quantity}</span>
                     </li>
                   ))}
@@ -356,6 +376,6 @@ function App()
         </div>
       </div>
     </div>
-  );    
+  );      
 }
 export default App;
