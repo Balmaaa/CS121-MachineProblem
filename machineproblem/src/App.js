@@ -58,8 +58,8 @@ const sellitems = [
   { name: "Lacoste Black Crocs", img: 'https://i5.walmartimages.com/asr/d15b955f-63ec-4cdc-aaa4-37b28807b81f.6856aa51ea991e5595d5396efb074517.jpeg' , description: '₱8,000'},
   { name: "Dior Homme Eau de Toilette", img: 'https://static.beautytocare.com/media/catalog/product/d/i/dior-dior-homme-eau-de-toilette-150ml.jpg' , description: '₱8,100'},
   { name: "Samsung Galaxy S21", img: 'https://cdn.alloallo.media/catalog/product/samsung/galaxy-s/galaxy-s21/galaxy-s21-phantom-purple.jpg' , description: '₱21,000'},
-  { name: "Dell Latitude 5430", img: 'https://business.shoppable.ph/_next/image?url=https%3A%2F%2Fshoppable-dev.s3.ap-southeast-1.amazonaws.com%2F9c27c63a-1afd-4327-ac6e-8b07a7f90fd3.jpg&w=256&q=75' , description: '₱81,000'},
-  { name: "DUPLO Tower Crane", img: 'https://images.prod.babyshopgroup.io/images/642997_10%23a/256x256.jpeg' , description: '₱5,400'}
+  //{ name: "Dell Latitude 5430", img: 'https://business.shoppable.ph/_next/image?url=https%3A%2F%2Fshoppable-dev.s3.ap-southeast-1.amazonaws.com%2F9c27c63a-1afd-4327-ac6e-8b07a7f90fd3.jpg&w=256&q=75' , description: '₱81,000'},
+  //{ name: "DUPLO Tower Crane", img: 'https://images.prod.babyshopgroup.io/images/642997_10%23a/256x256.jpeg' , description: '₱5,400'}
 ];
 
 
@@ -75,6 +75,7 @@ function App()
   const [quantities, setQuantities] = useState(items.map(() => 1));
   const [isSignUpPopupVisible, setIsSignUpPopupVisible] = useState(false);
   const [isSignInPopupVisible, setIsSignInPopupVisible] = useState(false);
+  const [isItemAddPopupVisible, setIsItemPopupVisible] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSeller, setIsSeller] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState('');
@@ -184,6 +185,11 @@ function App()
     event.stopPropagation();
     setIsSignUpPopupVisible(true);
   }
+
+  function handleItemAdd(event) {
+    event.stopPropagation();
+    setIsItemPopupVisible(true);
+  }
   
   function handleCloseSignUpPopup() {
     setIsSignUpPopupVisible(false);
@@ -212,6 +218,10 @@ function App()
     } else {
       console.error('Passwords do not match.');
     }
+  }
+
+  function handleItemAddSubmit(event) {
+    window.close()
   }
   
   function handleLogout() {
@@ -471,6 +481,34 @@ function App()
         </div>
       </div>
   
+      {isItemAddPopupVisible && (
+        <div className="popup">
+          <div className="popup-content">
+            <span className="close" onClick={() => setIsCartPopupVisible(false)}>&times;</span>
+            <h2> Add Item</h2>
+            <form onSubmit={handleItemAddSubmit}>
+              <label>
+                Product Name:
+                <input type="text"/>
+              </label>
+              <br />
+              <label>
+                Product Price:
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <input type="text"/>
+                </div>
+              </label>
+              <br />
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      <button className="sign-up-button" onClick={handleItemAdd}> Add Item </button>
+      <br/>
+      <button className="sign-up-button" onClick={handleItemAdd}> Delete Item </button>
+
       <div className="grid-container-wrapper-item-sell">
         <div className="grid-container">
           {sellitems.map((sellitem, index) => (
