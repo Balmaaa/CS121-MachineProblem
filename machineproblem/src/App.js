@@ -74,6 +74,7 @@ function App()
   const [cart, setCart] = useState([]);
   const [quantities, setQuantities] = useState(items.map(() => 1));
   const [isSignUpPopupVisible, setIsSignUpPopupVisible] = useState(false);
+  const [isSignInPopupVisible, setIsSignInPopupVisible] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSeller, setIsSeller] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState('');
@@ -81,6 +82,7 @@ function App()
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isOrderConfirmed, setIsOrderConfirmed] = useState(false);
  
   useEffect(() => {
     const filtered = sellitems.filter(sellitem => sellitem.name.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -141,6 +143,11 @@ function App()
     };
   }, [slideIndex, isPopupVisible]);
 
+  const handleOrderConfirmation = () => {
+    setIsOrderConfirmed(true);
+    // Clear the cart
+    setCart([]);
+  };
   
   function plusSlides(n) 
   {
@@ -181,6 +188,16 @@ function App()
   function handleCloseSignUpPopup() {
     setIsSignUpPopupVisible(false);
   }
+
+  function handleSignIn(event) {
+    event.stopPropagation();
+    setIsSignInPopupVisible(true);
+  }
+  
+  function handleCloseSignInPopup() {
+    setIsSignInPopupVisible(false);
+  }
+  
   
   function handleSignUpSubmit(event) {
     event.preventDefault();
@@ -355,6 +372,32 @@ function App()
         </div>
       )}
   
+
+      {isSignInPopupVisible && (
+        <div className="popup">
+          <div className="popup-content">
+            <span className="close" onClick={handleCloseSignInPopup}>&times;</span>
+            <h2>Sign In</h2>
+            <form onSubmit={handleSignUpSubmit}>
+              <label>
+                Email:
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ display: 'block', margin: '0 auto' }} />
+              </label>
+              <br />
+              <label>
+                Password:
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required style={{ width: '80%', marginRight: '10px' }} />
+                  <span onClick={() => setShowPassword(!showPassword)}>{showPassword ? '🙈' : '👁️'}</span>
+                </div>
+              </label>
+              <br />
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      )}
+  
       {isCartPopupVisible && (
         <div className="popup">
           <div className="popup-content">
@@ -372,7 +415,7 @@ function App()
                     </li>
                   ))}
                 </ul>
-                <button onClick={() => console.log('Proceed to Order')}>Proceed to Order</button>
+                <button onClick={handleOrderConfirmation}>Proceed to Order</button>
               </div>
             ) : (
               <p>Your cart is empty.</p>
@@ -381,6 +424,16 @@ function App()
         </div>
       )}
   
+        {isOrderConfirmed && (
+        <div className="popup">
+          <div className="popup-content">
+            <span className="close" onClick={() => setIsOrderConfirmed(false)}>&times;</span>
+            <h2>Order Confirmed</h2>
+            <p>Your order has been confirmed!</p>
+          </div>
+        </div>
+      )}
+
       <div className="slideshow-container">
         <div className="mySlides fade">
           <img src={img1} style={{ width: "100%" }} alt="Slide 1" />
