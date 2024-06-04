@@ -78,6 +78,9 @@ function App()
   const [isSeller, setIsSeller] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState('');
   const [userType, setUserType] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedItem, setSelectedItem] = useState(null);
+  const item = sellitems.find((item) => item.name.toLowerCase().startsWith(searchQuery.toLowerCase()));
 
   useEffect(() => {
     const storedUser = localStorage.getItem('loggedInUser');
@@ -216,6 +219,21 @@ function App()
 
   return (
     <div className="App">
+      <div className="search-bar-container">
+        <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => {
+          setSearchQuery(e.target.value);
+          const item = sellitems.find((item) => item.name.toLowerCase() === e.target.value.toLowerCase());
+          setSelectedItem(item);
+        }} />
+      {selectedItem && (
+        <div className="preview-container">
+          <img src={selectedItem.img} alt={selectedItem.name} />
+          <p>{selectedItem.name}</p>
+          <p>{selectedItem.description}</p>
+        </div>
+      )}
+      </div>
+
       <div className="top-bar">
         <div className="top-bar-content">
           <h1>Jasper's Clothing Shop</h1>
@@ -234,6 +252,8 @@ function App()
         </div>
       </div>
   
+      
+
       {isPopupVisible && (
         <div className="popup">
           <div className="popup-content">

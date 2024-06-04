@@ -73,6 +73,15 @@ button {
   margin: 5px 0;
 }
 
+.preview-container {
+  display: none;
+}
+
+.preview-container.show {
+  display: block;
+}
+
+
 .sign-in-button:hover,
 .view-cart-button:hover {
   background-color: #0056b3;
