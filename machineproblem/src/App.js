@@ -79,8 +79,13 @@ function App()
   const [loggedInUser, setLoggedInUser] = useState('');
   const [userType, setUserType] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedItem, setSelectedItem] = useState(null);
-  const item = sellitems.find((item) => item.name.toLowerCase().startsWith(searchQuery.toLowerCase()));
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+ 
+  useEffect(() => {
+    const filtered = sellitems.filter(sellitem => sellitem.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    setFilteredItems(filtered);
+  }, [searchQuery]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('loggedInUser');
@@ -217,22 +222,57 @@ function App()
     setQuantities(newQuantities);
   }
 
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase(); // Convert search query to lowercase
+    setSearchQuery(query);
+    
+    const filtered = sellitems.filter(item => item.name.toLowerCase().includes(query)); // Convert item names to lowercase for comparison
+  
+    setFilteredItems(filtered);
+  };
+  
+
+  
+  
+
+  const handleItemClick = (item) => {
+    setSearchQuery(item.name);
+    setIsDropdownOpen(false);
+  };
+
+
+
+  
   return (
     <div className="App">
-      <div className="search-bar-container">
-        <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => {
-          setSearchQuery(e.target.value);
-          const item = sellitems.find((item) => item.name.toLowerCase() === e.target.value.toLowerCase());
-          setSelectedItem(item);
-        }} />
-      {selectedItem && (
-        <div className="preview-container">
-          <img src={selectedItem.img} alt={selectedItem.name} />
-          <p>{selectedItem.name}</p>
-          <p>{selectedItem.description}</p>
-        </div>
-      )}
-      </div>
+      <header>
+        <nav className="navbar">
+          <br/>
+          <div className="navbar-section">
+            <div className="search-bar">
+              <input
+                type="text"
+                placeholder="Search for products"
+                value={searchQuery}
+                onChange={handleSearch}
+                onFocus={() => setIsDropdownOpen(true)}
+                onBlur={() => setTimeout(() => setIsDropdownOpen(false), 200)}
+              />
+
+              {isDropdownOpen && (
+                <div className="dropdown" style={{ position: 'absolute', top: '40px', left: '0', backgroundColor: '#fff', border: '1px solid #ccc', zIndex: '999' }}>
+                  {filteredItems.map((sellitem, index) => (
+                    <div key={index} className="dropdown-item" onClick={() => handleItemClick(sellitem)}>
+                      <img src={sellitem.img} alt={sellitem.name} className="dropdown-image" style={{ width: '30px', height: '30px' }} />
+                      <span>{sellitem.name}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </nav>
+      </header>
 
       <div className="top-bar">
         <div className="top-bar-content">
